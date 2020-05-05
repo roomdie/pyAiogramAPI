@@ -60,7 +60,7 @@ pip install ujson
 ## Your first bot.
 
 ### Token
-You need to get a **Token** from the bot in Telegram <a href="https://t.me/BotFather"@BotFather</a>.
+You need to get a **Token** from the bot in Telegram <a href="https://t.me/BotFather">@BotFather</a>.
 As well as basic knowledge of the Python and <a href="https://core.telegram.org/bots/api">API Telegram Bot.</a>
 
 ## A simple echo bot 
@@ -69,7 +69,7 @@ At first you have to import all necessary modules:
 import logging
 from aiogram import Bot, Dispatcher, executor, types
 ```
-Then you have to initialize bot and dispatcher instances. Make sure to actually replace TOKEN with your own API token.
+Then you have to initialize bot and dispatcher instances. Make sure to actually replace TOKEN with your own API token:
 ```python
 API_TOKEN = 'TOKEN'
 
@@ -80,7 +80,7 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 ```
-Next step: let's define a message handler which handles incoming /start and /help commands.
+Next step: let's define a message handler which handles incoming /start and /help commands:
 ```python
 @dp.message_handler(commands=['start', 'help'])
 async def send_welcome(message: types.Message):
