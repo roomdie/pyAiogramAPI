@@ -15,7 +15,7 @@ Original docs here <a href="https://aiogram.readthedocs.io">Aiogram API</a>
 </div>
 
 * [Quick Start.](#quick-start)
-
+* [Your first bot.](#your-first-bot)
 ## Quick Start.
 
 * Installation using pip:
@@ -56,3 +56,85 @@ pip install ujson
 	```
 	pip install aiohttp[speedups]
 	```
+
+## Your first bot.
+
+### Token
+You need to get a **Token** from the bot in Telegram <a href="https://t.me/BotFather"@BotFather</a>.
+As well as basic knowledge of the Python and <a href="https://core.telegram.org/bots/api">API Telegram Bot.</a>
+
+## A simple echo bot 
+At first you have to import all necessary modules:
+```python
+import logging
+from aiogram import Bot, Dispatcher, executor, types
+```
+Then you have to initialize bot and dispatcher instances. Make sure to actually replace TOKEN with your own API token.
+```python
+API_TOKEN = 'TOKEN'
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+# Initialize bot and dispatcher
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
+```
+Next step: let's define a message handler which handles incoming /start and /help commands.
+```python
+@dp.message_handler(commands=['start', 'help'])
+async def send_welcome(message: types.Message):
+    await message.reply("Hello, I'm bot.")
+```
+_A function which is decorated by a message handler can have an arbitrary name
+(try renaming the send_welcome function with any name)_
+
+Let's add another handler:
+```python
+@dp.message_handler()
+async def echo(message: types.Message):
+    await message.answer(message.text)
+```
+This one echoes all incoming text messages back to the sender.
+If you have already used other libraries for creating bots, then perhaps you remember that to send a message you had to do this:
+```python
+bot.send_message(message.chat.id, message.text)
+```
+But in Aiogram need like this:
+```python
+await message.answer(message.text)
+```
+
+Last step: we now have a basic bot which replies a static message to "/start" and "/help" commands and which echoes the rest of the sent messages. To start the bot, add the following to our source file:
+```python
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates=True)
+```
+
+Our source file now looks like this:
+```python
+import logging
+from aiogram import Bot, Dispatcher, executor, types
+
+API_TOKEN = 'TOKEN'
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+# Initialize bot and dispatcher
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
+
+
+@dp.message_handler(commands=['start', 'help'])
+async def send_welcome(message: types.Message):
+    await message.reply("Hello, I'm bot.")
+
+
+@dp.message_handler()
+async def echo(message: types.Message):
+    await message.answer(message.text)
+    
+if __name__ == '__main__':
+    executor.start_polling(dp, skip_updates=True)
+```
