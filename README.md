@@ -14,8 +14,10 @@ Original docs here <a href="https://aiogram.readthedocs.io">Aiogram API</a>
 	
 </div>
 
-* [Quick Start.](#quick-start)
-* [Your first bot.](#your-first-bot)
+* [Quick Start](#quick-start)
+* [Your first bot](#your-first-bot)
+* [Proxy](#proxy)
+
 ## Quick Start.
 
 * Installation using pip:
@@ -63,7 +65,7 @@ pip install ujson
 You need to get a **Token** from the bot in Telegram <a href="https://t.me/BotFather">@BotFather</a>.
 As well as basic knowledge of the Python and <a href="https://core.telegram.org/bots/api">API Telegram Bot.</a>
 
-## A simple echo bot 
+### A simple echo bot 
 At first you have to import all necessary modules:
 ```python
 import logging
@@ -138,3 +140,37 @@ async def echo(message: types.Message):
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
 ```
+
+## Proxy
+
+This paragraph is not far from its first bot, because in some countries Telegram is blocked, and this information may be primarily useful.
+
+If you use a **free proxy**, then in most cases you do not need a username and password:
+```python
+import logging
+from aiogram import Bot, Dispatcher, executor, types
+
+API_TOKEN = 'TOKEN'
+PROXY = 'socks5://host:port' # or 'http://PROXY_URL'
+
+logging.basicConfig(level=logging.INFO)
+
+bot = Bot(token=API_TOKEN, proxy=PROXY)
+```
+But if you have a **username** and **password**:
+```python
+import logging
+from aiogram import Bot, Dispatcher, executor, types
+
+API_TOKEN = 'TOKEN'
+PROXY = 'socks5://host:port' # or 'http://PROXY_URL'
+PROXY_AUTH = aiohttp.BasicAuth(login='login', password='password')
+
+logging.basicConfig(level=logging.INFO)
+
+bot = Bot(token=API_TOKEN, proxy=PROXY, proxy_auth=PROXY_AUTH)
+```
+
+## General API
+
+### Types
